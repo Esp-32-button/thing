@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ESP32 Control</title>
+</head>
+<body>
+    <h1>Control ESP32</h1>
+    <button onclick="sendCommand(1)">Turn ON LED</button>
+    <button onclick="sendCommand(0)">Turn OFF LED</button>
+
+    <script>
+        const writeAPIKey = "37RO4B97R1WR9JZC";
+        const channelID = 2785198;
+
+        function sendCommand(value) {
+            fetch(`https://api.thingspeak.com/update?api_key=${writeAPIKey}&field1=${value}`)
+                .then(response => response.text())
+                .then(data => {
+                    if (data.includes("ok")) {
+                        alert("Command sent successfully");
+                    } else {
+                        alert("Error sending command");
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
